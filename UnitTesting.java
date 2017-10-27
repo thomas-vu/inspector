@@ -12,8 +12,8 @@ public class UnitTesting {
         System.setOut(new PrintStream(os));
         
         Inspector inspector = new Inspector();
-        ClassT clT = new ClassT();
-        inspector.inspectInterfaces(clT.getClass(), true);
+        ClassA clA = new ClassA();
+        inspector.inspectInterfaces(clA.getClass(), true);
 
         String actualOutput = os.toString();
         assertEquals("Interfaces implemented: \n" + 
@@ -27,8 +27,8 @@ public class UnitTesting {
         System.setOut(new PrintStream(os));
         
         Inspector inspector = new Inspector();
-        ClassT clT = new ClassT();
-        inspector.inspectMethods(clT.getClass(), true);
+        ClassA clA = new ClassA();
+        inspector.inspectMethods(clA.getClass(), true);
 
         String actualOutput = os.toString();
         assertEquals("Methods: \n" + 
@@ -75,17 +75,17 @@ public class UnitTesting {
         System.setOut(new PrintStream(os));
         
         Inspector inspector = new Inspector();
-        ClassT clT = new ClassT();
-        inspector.inspectConstructors(clT.getClass(), true);
+        ClassA clA = new ClassA();
+        inspector.inspectConstructors(clA.getClass(), true);
 
         String actualOutput = os.toString();
         assertEquals("Constructors: \n" + 
-        		"    Name: ClassT\n" + 
+        		"    Name: ClassA\n" + 
         		"    Parameter types: \n" + 
         		"        None\n" + 
         		"    Modifiers: 1\n" + 
         		"\n" + 
-        		"    Name: ClassT\n" + 
+        		"    Name: ClassA\n" + 
         		"    Parameter types: \n" + 
         		"        int\n" + 
         		"    Modifiers: 1\n" + 
@@ -98,8 +98,8 @@ public class UnitTesting {
         System.setOut(new PrintStream(os));
         
         Inspector inspector = new Inspector();
-        ClassT clT = new ClassT();
-        inspector.inspectFields(clT.getClass(), true);
+        ClassA clA = new ClassA();
+        inspector.inspectFields(clA.getClass(), true);
 
         String actualOutput = os.toString();
         assertEquals("Fields: \n" + 
