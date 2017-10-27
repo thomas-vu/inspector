@@ -7,12 +7,18 @@ import org.junit.Test;
 public class UnitTesting {
 
 	@Test
-    public void printTest() throws Exception {
+    public void inspectInterfacesTest() throws Exception {
         OutputStream os = new ByteArrayOutputStream();
         System.setOut(new PrintStream(os));
-        System.out.print("Testing assertions with console output");
+        
+        Inspector inspector = new Inspector();
+        ClassT clT = new ClassT();
+        inspector.inspectInterfaces(clT.getClass(), true);
+
         String actualOutput = os.toString();
-        assertEquals("Testing assertions with console output", actualOutput);
+        assertEquals("Interfaces implemented: \n" + 
+        		" - java.io.Serializable\n" + 
+        		" - java.lang.Runnable\n\n", actualOutput);
     }
 
 }
