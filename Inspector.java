@@ -20,15 +20,24 @@ public class Inspector
 	public Queue<Class> classesToInspect = new ArrayDeque<Class>();
 	public ArrayList<Class> inspectedClasses = new ArrayList<Class>();
 	
-	public Inspector() { }
+	// Credit to Peter Lawrey: https://stackoverflow.com/questions/709961/determining-if-an-object-is-of-primitive-type/3831414#3831414
+		private static final Set<Class> WRAPPER_TYPES = new HashSet(
+				Arrays.asList(Boolean.class, Character.class, Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Void.class));
 	
-	private static final Set<Class> WRAPPER_TYPES = new HashSet(
-			Arrays.asList(Boolean.class, Character.class, Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Void.class));
+	public Inspector() { }
 	
 	public static boolean isWrapperType(Class c) {
 	    return WRAPPER_TYPES.contains(c);
 	}
 	
+	/*
+	 * This method inspects an object reflectively.
+	 * params:
+	 * 		cl - The class whose interfaces to inspect
+	 * 	    recursive - Whether to check all object fields recursively
+	 * return:
+	 * 		None
+	 */
 	public void inspect(Object obj, boolean recursive)
     {
 		inspectedObjects.add(obj);
@@ -100,7 +109,14 @@ public class Inspector
 	
 	
 
-	
+	/*
+	 * This method inspects a class reflectively.
+	 * params:
+	 * 		cl - The class whose interfaces to inspect
+	 * 	    recursive - Whether to check all object fields recursively
+	 * return:
+	 * 		None
+	 */
 	public void inspectClass(Class cl, boolean recursive)
     {		
 		if (inspectedClasses.contains(cl)) return;
@@ -126,40 +142,8 @@ public class Inspector
 		
 		inspectInterfaces(cl, recursive);
 		inspectMethods(cl, recursive);
-		
-		
-		// Constructor Details
-		Constructor[] constructors = cl.getDeclaredConstructors();
-		if (constructors.length == 0) System.out.println("No constructors.");
-		else
-		{
-			System.out.println("Constructors: ");
-			for (Constructor c : constructors)
-			{
-				System.out.println("    Name: " + c.getName());
-				
-				System.out.println("    Parameter types: ");
-				Class[] parameters = c.getParameterTypes();
-				if (parameters.length == 0) System.out.println("        None");
-				else for (Class p : parameters) System.out.println("        " + p.getName());
-				
-				System.out.println("    Modifiers: " + c.getModifiers() + "\n");
-			}
-		}
-
-		// Fields Details
-		Field[] fields = cl.getDeclaredFields();
-		if (fields.length == 0) System.out.println("No fields.\n");
-		else
-		{
-			System.out.println("Fields: ");
-			for (Field f : fields)
-			{
-				System.out.println("    Name: " + f.getName());
-				System.out.println("    Type: " + f.getType());
-				System.out.println("    Modifiers: " + f.getModifiers() + "\n");
-			}
-		}
+		inspectConstructors(cl, recursive);
+		inspectFields(cl, recursive);
 		
 		// Get new class to inspect
 		if (!classesToInspect.isEmpty())
@@ -235,6 +219,62 @@ public class Inspector
 	}
 	
 	
+	
+	/*
+	 * This method inspects the constructors of a class.
+	 * params:
+	 * 		cl - The class whose interfaces to inspect
+	 * 	    recursive - Whether to check all object fields recursively
+	 * return:
+	 * 		None
+	 */
+	public void inspectConstructors(Class cl, boolean recursive)
+	{
+		Constructor[] constructors = cl.getDeclaredConstructors();
+		if (constructors.length == 0) System.out.println("No constructors.");
+		else
+		{
+			System.out.println("Constructors: ");
+			for (Constructor c : constructors)
+			{
+				System.out.println("    Name: " + c.getName());
+				
+				System.out.println("    Parameter types: ");
+				Class[] parameters = c.getParameterTypes();
+				if (parameters.length == 0) System.out.println("        None");
+				else for (Class p : parameters) System.out.println("        " + p.getName());
+				
+				System.out.println("    Modifiers: " + c.getModifiers() + "\n");
+			}
+		}
+	}
+	
+	
+	
+	
+	/*
+	 * This method inspects the fields of a class.
+	 * params:
+	 * 		cl - The class whose interfaces to inspect
+	 * 	    recursive - Whether to check all object fields recursively
+	 * return:
+	 * 		None
+	 */
+	public void inspectFields(Class cl, boolean recursive)
+	{
+		Field[] fields = cl.getDeclaredFields();
+		if (fields.length == 0) System.out.println("No fields.\n");
+		else
+		{
+			System.out.println("Fields: ");
+			for (Field f : fields)
+			{
+				System.out.println("    Name: " + f.getName());
+				System.out.println("    Type: " + f.getType());
+				System.out.println("    Modifiers: " + f.getModifiers() + "\n");
+			}
+		}
+	}
 	
 	
 }
