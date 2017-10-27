@@ -125,30 +125,8 @@ public class Inspector
 		if (!cl.isInterface()) System.out.println("Immediate Superclass: " + cl.getSuperclass().getName() + "\n");
 		
 		inspectInterfaces(cl, recursive);
+		inspectMethods(cl, recursive);
 		
-		// Method Details
-		Method[] methods = cl.getDeclaredMethods();
-		if (methods.length == 0) System.out.println("No declared methods.");
-		else
-		{
-			System.out.println("Methods: ");
-			for (Method m : methods)
-			{
-				System.out.println("    Name: " + m.getName());
-				
-				System.out.println("    Exceptions thrown: ");
-				Class[] exceptions = m.getExceptionTypes();
-				if (exceptions.length == 0) System.out.println("        None");
-				else for (Class e : exceptions) System.out.println("        " + e.getName());
-				
-				System.out.println("    Parameter types: ");
-				Class[] parameters = m.getParameterTypes();
-				if (parameters.length == 0) System.out.println("        None");
-				else for (Class p : parameters) System.out.println("        " + p.getName());
-				
-				System.out.println("    Modifiers: " + m.getModifiers() + "\n");
-			}
-		}
 		
 		// Constructor Details
 		Constructor[] constructors = cl.getDeclaredConstructors();
@@ -198,6 +176,8 @@ public class Inspector
 	 * params:
 	 * 		cl - The class whose interfaces to inspect
 	 * 	    recursive - Whether to check all object fields recursively
+	 * return:
+	 * 		None
 	 */
 	public void inspectInterfaces(Class cl, boolean recursive)
 	{
@@ -217,6 +197,43 @@ public class Inspector
 			System.out.println();
 		}
 	}
+	
+	
+	
+	/*
+	 * This method inspects the methods of a class.
+	 * params:
+	 * 		cl - The class whose interfaces to inspect
+	 * 	    recursive - Whether to check all object fields recursively
+	 * return:
+	 * 		None
+	 */
+	public void inspectMethods(Class cl, boolean recursive)
+	{
+		Method[] methods = cl.getDeclaredMethods();
+		if (methods.length == 0) System.out.println("No declared methods.");
+		else
+		{
+			System.out.println("Methods: ");
+			for (Method m : methods)
+			{
+				System.out.println("    Name: " + m.getName());
+				
+				System.out.println("    Exceptions thrown: ");
+				Class[] exceptions = m.getExceptionTypes();
+				if (exceptions.length == 0) System.out.println("        None");
+				else for (Class e : exceptions) System.out.println("        " + e.getName());
+				
+				System.out.println("    Parameter types: ");
+				Class[] parameters = m.getParameterTypes();
+				if (parameters.length == 0) System.out.println("        None");
+				else for (Class p : parameters) System.out.println("        " + p.getName());
+				
+				System.out.println("    Modifiers: " + m.getModifiers() + "\n");
+			}
+		}
+	}
+	
 	
 	
 	
