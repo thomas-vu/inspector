@@ -97,6 +97,10 @@ public class Inspector
 		inspectedClasses.clear();
     }
 	
+	
+	
+
+	
 	public void inspectClass(Class cl, boolean recursive)
     {		
 		if (inspectedClasses.contains(cl)) return;
@@ -120,22 +124,7 @@ public class Inspector
 		System.out.println("Declaring Class: " + cl.getName() + "\n");
 		if (!cl.isInterface()) System.out.println("Immediate Superclass: " + cl.getSuperclass().getName() + "\n");
 		
-		// Interface Details
-		Class[] interfaces = cl.getInterfaces();
-		if (interfaces.length == 0) System.out.println("No interfaces implemented.\n");
-		else
-		{
-			System.out.println("Interfaces implemented: ");
-			for (Class c : interfaces)
-			{
-				System.out.println(" - " + c.getName());
-				if (!inspectedClasses.contains(c) && !classesToInspect.contains(c)) 
-				{
-					classesToInspect.add(c);
-				}
-			}
-			System.out.println();
-		}
+		inspectInterfaces(cl, recursive);
 		
 		// Method Details
 		Method[] methods = cl.getDeclaredMethods();
@@ -200,4 +189,35 @@ public class Inspector
 			inspectClass(classesToInspect.remove(), recursive);
 		}
     }
+	
+	
+	
+	
+	/*
+	 * This method inspects the interfaces of a class.
+	 * params:
+	 * 		cl - The class whose interfaces to inspect
+	 * 	    recursive - Whether to check all object fields recursively
+	 */
+	public void inspectInterfaces(Class cl, boolean recursive)
+	{
+		Class[] interfaces = cl.getInterfaces();
+		if (interfaces.length == 0) System.out.println("No interfaces implemented.\n");
+		else
+		{
+			System.out.println("Interfaces implemented: ");
+			for (Class c : interfaces)
+			{
+				System.out.println(" - " + c.getName());
+				if (!inspectedClasses.contains(c) && !classesToInspect.contains(c)) 
+				{
+					classesToInspect.add(c);
+				}
+			}
+			System.out.println();
+		}
+	}
+	
+	
+	
 }
