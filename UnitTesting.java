@@ -69,4 +69,27 @@ public class UnitTesting {
         		"\n", actualOutput);
     }
 	
+	@Test
+    public void inspectConstructorsTest() throws Exception {
+        OutputStream os = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(os));
+        
+        Inspector inspector = new Inspector();
+        ClassT clT = new ClassT();
+        inspector.inspectConstructors(clT.getClass(), true);
+
+        String actualOutput = os.toString();
+        assertEquals("Constructors: \n" + 
+        		"    Name: ClassT\n" + 
+        		"    Parameter types: \n" + 
+        		"        None\n" + 
+        		"    Modifiers: 1\n" + 
+        		"\n" + 
+        		"    Name: ClassT\n" + 
+        		"    Parameter types: \n" + 
+        		"        int\n" + 
+        		"    Modifiers: 1\n" + 
+        		"\n", actualOutput);
+    }
+	
 }
