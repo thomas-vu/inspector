@@ -92,4 +92,33 @@ public class UnitTesting {
         		"\n", actualOutput);
     }
 	
+	@Test
+    public void inspectFieldsTest() throws Exception {
+        OutputStream os = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(os));
+        
+        Inspector inspector = new Inspector();
+        ClassT clT = new ClassT();
+        inspector.inspectFields(clT.getClass(), true);
+
+        String actualOutput = os.toString();
+        assertEquals("Fields: \n" + 
+        		"    Name: val\n" + 
+        		"    Type: int\n" + 
+        		"    Modifiers: 2\n" + 
+        		"\n" + 
+        		"    Name: val2\n" + 
+        		"    Type: double\n" + 
+        		"    Modifiers: 2\n" + 
+        		"\n" + 
+        		"    Name: val3\n" + 
+        		"    Type: boolean\n" + 
+        		"    Modifiers: 2\n" + 
+        		"\n" + 
+        		"    Name: val4\n" + 
+        		"    Type: class [I\n" + 
+        		"    Modifiers: 2\n" + 
+        		"\n", actualOutput);
+    }
+	
 }
